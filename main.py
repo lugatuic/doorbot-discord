@@ -18,7 +18,7 @@ async def open(message):
     if message.author == client.user:
         return
     try:
-        subprocess.run (["lockedout"])
+        subprocess.run (["./opendoor.sh"])
         await message.respond ("Door should have opened.")
         print (f"Opened door for {message.author} at {datetime.now()}")
     except:
