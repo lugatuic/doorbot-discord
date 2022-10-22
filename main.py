@@ -13,15 +13,17 @@ client = discord.Bot ()
 async def on_ready():
     print(f'We have logged in as {client.user}')
 
-@client.slash_command(guild_ids=[408157484444811265, 652006495675875359])
+@client.slash_command(guild_ids=[408157484444811265, 652006495675875359]) # My testing server and ACM
 async def open(message):
-    if message.author == client.user:
-        return
-    try:
-        subprocess.run (["./opendoor.sh"])
-        await message.respond ("Door should have opened.")
-        print (f"Opened door for {message.author} at {datetime.now()}")
-    except:
-        await message.respond ("Error :(");
+   if message.author == client.user:
+      return
+   for r in message.author.roles:
+      if str (r) == "Doorkeeper":
+         try:
+            subprocess.run (["./opendoor.sh"])
+            await message.respond ("Door should have opened.")
+            print (f"Opened door for {message.author} at {datetime.now()}")
+         except:
+            await message.respond ("Error :(");
 
 client.run(token)
