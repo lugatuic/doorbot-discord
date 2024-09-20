@@ -1,0 +1,18 @@
+[project]
+name = "doorbot"
+description = "Discord bot to automagically open the door"
+version = "0.0.1"
+authors = [
+	{name = "Soham Gumaste", email = "sgumas2@uic.edu"},
+]
+dependencies = [
+	"py-cord",
+	"open_door",
+]
+classifiers = [
+	"License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "https://lug.cs.uic.edu"
+Repository = "https://github.com/lugatuic/doorbot-discord"
