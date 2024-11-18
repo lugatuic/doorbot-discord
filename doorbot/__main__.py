@@ -28,7 +28,7 @@ async def open(message):
         await message.respond(f"Missing door role!")
         return
 
-    with door.FileMutex(door.OPEN_DOOR_LOCKFILE_NAME):
+    async with door.FileMutex(door.OPEN_DOOR_LOCKFILE_NAME):
         await door.openSolenoid()
 
         w = await message.respond(f"Hurry! The door is open!", ephemeral=True)
