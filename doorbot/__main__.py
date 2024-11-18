@@ -1,9 +1,8 @@
 # This example requires the 'message_content' intent.
 
+import asyncio
 import discord
 import datetime
-import subprocess
-import json
 import open_door as door
 
 with open ('secret.txt') as f:
@@ -35,19 +34,12 @@ async def open(message):
         w = await message.respond(f"Hurry! The door is open!", ephemeral=True)
         for i in range(10):
             await w.edit(content=f"Hurry! The door is open for {10 - i} more seconds!")
-            door.wait(1)
+            await asyncio.sleep(1)
 
         await w.edit(content="Door is now closed!")
         door.closeSolenoid()
 
     await message.respond("Processed!")
-
-    # try:
-    #     subprocess.run (["./opendoor.sh"], check=True)
-    #     await message.respond ("Door should have opened.")
-    # except:
-    #     await message.respond ("Error :(");
-    #     return
 
     print (f"Opened door for {message.author} at {datetime.datetime.now()}")
 
