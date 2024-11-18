@@ -29,7 +29,7 @@ async def open(message):
         return
 
     with door.FileMutex(door.OPEN_DOOR_LOCKFILE_NAME):
-        door.openSolenoid()
+        await door.openSolenoid()
 
         w = await message.respond(f"Hurry! The door is open!", ephemeral=True)
         for i in range(10):
@@ -37,7 +37,7 @@ async def open(message):
             await asyncio.sleep(1)
 
         await w.edit(content="Door is now closed!")
-        door.closeSolenoid()
+        await door.closeSolenoid()
 
     await message.respond("Processed!")
 
