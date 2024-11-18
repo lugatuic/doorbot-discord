@@ -28,15 +28,18 @@ async def open(message):
     if not allowed:
         await message.respond(f"Missing door role!")
         return
-    door.openSolenoid()
 
-    w = await message.respond(f"Hurry! The door is open!", ephemeral=True)
-    for i in range(10):
-        await w.edit(content=f"Hurry! The door is open for {10 - i} more seconds!")
-        door.wait(1)
+    with door.FileMutex(door.OPEN_DOOR_LOCKFILE_NAME):
+        door.openSolenoid()
 
-    await w.edit(content="Door is now closed!")
-    door.closeSolenoid()
+        w = await message.respond(f"Hurry! The door is open!", ephemeral=True)
+        for i in range(10):
+            await w.edit(content=f"Hurry! The door is open for {10 - i} more seconds!")
+            door.wait(1)
+
+        await w.edit(content="Door is now closed!")
+        door.closeSolenoid()
+
     await message.respond("Processed!")
 
     # try:
